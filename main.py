@@ -1,6 +1,4 @@
 from datetime import datetime, timedelta, timezone
-import random
-import time
 from typing import Annotated
 from fastapi.responses import RedirectResponse
 import gradio as gr
@@ -9,44 +7,15 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
+from security.models import Token, TokenData, User, UserInDB
+from security.fake_users import fake_users_db
+from ui import build_ui
 
 # to get a string like this run:
 # openssl rand -hex 32
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-
-fake_users_db = {
-    "johndoe": {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    }
-}
-
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-
-class TokenData(BaseModel):
-    username: str | None = None
-
-
-class User(BaseModel):
-    username: str
-    email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
-
-
-class UserInDB(User):
-    hashed_password: str
-
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -55,46 +24,18 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 app = FastAPI()
 
 # Gradio app
-with gr.Blocks() as demo:
-    chatbot = gr.Chatbot()
-    msg = gr.Textbox()
-    clear = gr.ClearButton([msg, chatbot])
-    gr.Button("Logout", link="/logout", scale=0, min_width=50)
-
-    def user(user_message, history, request: gr.Request):
-        if request:
-            un = request.username
-            pass
-        
-        return gr.update(value="", interactive=False), history + [[user_message, None]]
-
-    def bot(history):
-        bot_message = random.choice(["How are you?", "I love you", "I'm very hungry"])
-        history[-1][1] = ""
-        for character in bot_message:
-            history[-1][1] += character
-            time.sleep(0.05)
-            yield history
-
-    response = msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(
-        bot, chatbot, chatbot
-    )
-    response.then(lambda: gr.update(interactive=True), None, [msg], queue=False)
-
-demo.queue()
-
-def same_auth(username, password):    
+def check_credentials(username, password):    
     user = authenticate_user(fake_users_db, username, password)
     if not user:
         return False
     
     return True
 
-demo.auth = same_auth
-demo.auth_message = None
+ui = build_ui(check_credentials)
 
 CUSTOM_PATH = "/gradio"
-app = gr.mount_gradio_app(app, demo, path=CUSTOM_PATH)
+app = gr.mount_gradio_app(app, ui, path=CUSTOM_PATH)
+
 # end gradio
 
 def verify_password(plain_password, hashed_password):
