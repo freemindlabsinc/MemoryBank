@@ -61,7 +61,11 @@ with gr.Blocks() as demo:
     clear = gr.ClearButton([msg, chatbot])
     gr.Button("Logout", link="/logout", scale=0, min_width=50)
 
-    def user(user_message, history):
+    def user(user_message, history, request: gr.Request):
+        if request:
+            un = request.username
+            pass
+        
         return gr.update(value="", interactive=False), history + [[user_message, None]]
 
     def bot(history):
