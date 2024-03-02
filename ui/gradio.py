@@ -1,17 +1,13 @@
 import random
 import time
 import gradio as gr
-from security.fake_users import fake_users_db
-
-
+from security.functions import check_credentials
+from security import functions
 
 # Gradio app
-def build_ui(check_credentials):
-    if not check_credentials:
-        raise ValueError("check_credentials is required")
-    
+def build_gradio_ui():
     with gr.Blocks() as ui:
-        ui.auth = check_credentials
+        ui.auth = functions.check_credentials
         ui.auth_message = None        
         
         chatbot = gr.Chatbot()
