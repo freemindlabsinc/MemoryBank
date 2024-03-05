@@ -1,13 +1,26 @@
 import random
 import time
 import gradio as gr
-from security.functions import check_credentials
-from security import functions
-
+from security.functions import Authentication
+from ui.summarization import create_summarization_tab
+from ui.image_captioning import create_image_captioning_tab
 # Gradio app
+
 def build_gradio_ui():
+    summarization_tab = create_summarization_tab()
+    imagecaptioning_tab = create_image_captioning_tab()
+    
+    demo = gr.TabbedInterface(
+        # [chat_tab, voice_tab, video_tab, file_manager_tab], 
+        [summarization_tab, imagecaptioning_tab], 
+        #["Chat", "Voice", "Video", "File Manager"])
+        ["Summarization", "Image Captioning"])
+    
+    return demo
+
+def build_gradio_ui_old():
     with gr.Blocks() as ui:
-        ui.auth = functions.check_credentials
+        ui.auth = Authentication.authenticate_user
         ui.auth_message = None        
         
         chatbot = gr.Chatbot()
@@ -24,7 +37,7 @@ def build_gradio_ui():
 
         def bot(history, request: gr.Request):
             un = request.username or "Unknown"
-            bot_message = random.choice([f"How are you {un}?", f"I love you {un}", f"I'm very hungry, {un}"])
+            bot_message = random.choice([f"How are you {un}?", f"I care about you {un}", f"I'm very hungry, {un}"])
             history[-1][1] = ""
             for character in bot_message:
                 history[-1][1] += character
@@ -39,3 +52,6 @@ def build_gradio_ui():
         ui.queue()
         
         return ui
+
+    
+    
