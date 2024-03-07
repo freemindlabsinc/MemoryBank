@@ -1,4 +1,5 @@
 from abc import ABC
+from fastapi.responses import RedirectResponse
 import gradio as gr
 from fastapi import Depends, FastAPI
 
@@ -20,6 +21,6 @@ app.include_router(users_router)
 # Web Root
 @app.get("/")
 def read_main():
-    return {"message": "This is your main app"}
+    return RedirectResponse("/gradio")    
 
 # experiments
