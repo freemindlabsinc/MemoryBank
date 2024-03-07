@@ -16,8 +16,9 @@ def build_gradio_ui():
         # [chat_tab, voice_tab, video_tab, file_manager_tab], 
         [summarization_tab, imagecaptioning_tab, entity_recognition_tab], 
         #["Chat", "Voice", "Video", "File Manager"])
-        ["Summarization", "Image Captioning", "Entity Recognition"])
-    
+        ["Summarization", "Image Captioning", "Entity Recognition"], 
+        css="footer {visibility: hidden}",
+    )
     return demo
 
 def build_gradio_ui_old():

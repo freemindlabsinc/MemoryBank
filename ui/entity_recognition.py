@@ -36,15 +36,26 @@ def ner(input):
     merged_tokens = merge_tokens(output)
     return {"text": input, "entities": merged_tokens}
 
+text2 = ('''Carl Sagan was an American astronomer, planetary scientist, cosmologist, astrophysicist, astrobiologist, author, and science communicator. 
+        His best known scientific contribution is research on extraterrestrial life, including experimental demonstration of the production of amino acids from basic chemicals by radiation. 
+        Sagan assembled the first physical messages sent into space: the Pioneer plaque and the Voyager Golden Record, universal messages that could potentially be understood by any extraterrestrial intelligence that might find them. 
+        Sagan argued the now-accepted hypothesis that the high surface temperatures of Venus can be attributed to and calculated using the greenhouse effect. 
+        Sagan published more than 600 scientific papers and articles and was author, co-author or editor of more than 20 books. He wrote many popular science books, such as The Dragons of Eden, which won the Pulitzer Prize for General Non-Fiction in 1978.
+        
+        In addition, he co-wrote and narrated the award-winning 1980 television series Cosmos: A Personal Voyage, which became the most-watched series in the history of American public television.
+        ''')
 
 def create_entity_recognition_tab():
     gr.close_all()
     tab = gr.Interface(fn=ner,
-                    inputs=[gr.Textbox(label="Text to find entities", lines=2, value=text)],
+                    inputs=[gr.Textbox(label="Text to find entities", lines=2)],
                     outputs=[gr.HighlightedText(label="Text with entities")],
                     title="NER with dslim/bert-base-NER",
                     description="Find entities using the `dslim/bert-base-NER` model under the hood!",
                     allow_flagging="never",
-                    examples=["My name is Andrew, I'm building DeeplearningAI and I live in California", "My name is Poli, I live in Vienna and work at HuggingFace"])
+                    examples=[
+                        "My name is Andrew, I'm building DeeplearningAI and I live in California", 
+                        "My name is Poli, I live in Vienna and work at HuggingFace",
+                        text2])
 
     return tab
