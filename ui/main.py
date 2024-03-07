@@ -15,12 +15,15 @@ def build_gradio_ui():
     chat_tab = create_chat_tab()
     
     demo = gr.TabbedInterface(
-        # [chat_tab, voice_tab, video_tab, file_manager_tab], 
+        # [voice_tab, file_manager_tab], 
         [summarization_tab, imagecaptioning_tab, entity_recognition_tab, chat_tab], 
-        #["Chat", "Voice", "Video", "File Manager"])
+        #["Voice", "File Manager"])
         ["Summarization", "Image Captioning", "Entity Recognition", "Chat"], 
         css="footer {visibility: hidden}",
     )
+    demo.auth = Authentication.authenticate_user
+    demo.auth_message = None
+    
     return demo
 
 def build_gradio_ui_old():
