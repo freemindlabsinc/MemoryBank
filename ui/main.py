@@ -5,18 +5,20 @@ from security.functions import Authentication
 from ui.summarization import create_summarization_tab
 from ui.image_captioning import create_image_captioning_tab
 from ui.entity_recognition import create_entity_recognition_tab
+from ui.chat import create_chat_tab
 # Gradio app
 
 def build_gradio_ui():
     summarization_tab = create_summarization_tab()
     imagecaptioning_tab = create_image_captioning_tab()
     entity_recognition_tab = create_entity_recognition_tab()
+    chat_tab = create_chat_tab()
     
     demo = gr.TabbedInterface(
         # [chat_tab, voice_tab, video_tab, file_manager_tab], 
-        [summarization_tab, imagecaptioning_tab, entity_recognition_tab], 
+        [summarization_tab, imagecaptioning_tab, entity_recognition_tab, chat_tab], 
         #["Chat", "Voice", "Video", "File Manager"])
-        ["Summarization", "Image Captioning", "Entity Recognition"], 
+        ["Summarization", "Image Captioning", "Entity Recognition", "Chat"], 
         css="footer {visibility: hidden}",
     )
     return demo
