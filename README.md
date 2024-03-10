@@ -11,3 +11,4 @@ pip install 'transformers[flax]'
 pip install "python-jose[cryptography]"
 pip install "passlib[bcrypt]"
 pip install text-generation
+pip install torchaudio

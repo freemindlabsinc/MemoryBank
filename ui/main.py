@@ -6,6 +6,7 @@ from ui.summarization import create_summarization_tab
 from ui.image_captioning import create_image_captioning_tab
 from ui.entity_recognition import create_entity_recognition_tab
 from ui.chat import create_chat_tab
+from ui.voice import create_voice_tab
 # Gradio app
 
 def build_gradio_ui():
@@ -13,12 +14,14 @@ def build_gradio_ui():
     imagecaptioning_tab = create_image_captioning_tab()
     entity_recognition_tab = create_entity_recognition_tab()
     chat_tab = create_chat_tab()
+    voice_tab = create_voice_tab()
     
     demo = gr.TabbedInterface(
+        title="Machine Learning & Streaming Chat",
         # [voice_tab, file_manager_tab], 
-        [summarization_tab, imagecaptioning_tab, entity_recognition_tab, chat_tab], 
+        interface_list= [summarization_tab, imagecaptioning_tab, entity_recognition_tab, chat_tab, voice_tab], 
         #["Voice", "File Manager"])
-        ["Summarization", "Image Captioning", "Entity Recognition", "Chat"], 
+        tab_names = ["Summarization", "Image Captioning", "Entity Recognition", "Chat", "Voice"],         
         css="footer {visibility: hidden}",
     )
     demo.auth = Authentication.authenticate_user

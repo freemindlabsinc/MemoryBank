@@ -135,11 +135,14 @@ def create_chat_tab():
                    accordion_msg = gr.HTML(value="🚧 To set System message you will have to refresh the app", visible=False)
                              
            chatbot = gr.Chatbot(label='GPT4', elem_id="chatbot")
-           inputs = gr.Textbox(placeholder= "Hi there!", label= "Type an input and press Enter")
+           user_message = gr.Textbox(placeholder= "Message your GPT!", label= "Type an input and press Enter")
+           
            state = gr.State([]) 
            with gr.Row():
                with gr.Column(scale=7):
-                   b1 = gr.Button()#.style(full_width=True)
+                   run_btn = gr.Button()#.style(full_width=True)
+                   #clear_btn = gr.ClearButton([user_message, chatbot])
+
                with gr.Column(scale=3):
                    server_status_code = gr.Textbox(label="Status code from OpenAI server", )
        
@@ -149,17 +152,19 @@ def create_chat_tab():
                temperature = gr.Slider( minimum=-0, maximum=5.0, value=1.0, step=0.1, interactive=True, label="Temperature",)
                chat_counter = gr.Number(value=0, visible=False, precision=0)
    
-       #Event handling
-       inputs.submit( predict, [system_msg, inputs, top_p, temperature, chat_counter, chatbot, state], [chatbot, state, chat_counter, server_status_code],)  #openai_api_key
-       b1.click( predict, [system_msg, inputs, top_p, temperature, chat_counter, chatbot, state], [chatbot, state, chat_counter, server_status_code],)  #openai_api_key
+       #Event handling       
+       #clear_btn.click( reset_textbox, [], [user_message]).then( reset_textbox, [], [chatbot])
        
-       inputs.submit(set_visible_false, [], [system_msg])
-       b1.click(set_visible_false, [], [system_msg])
-       inputs.submit(set_visible_true, [], [accordion_msg])
-       b1.click(set_visible_true, [], [accordion_msg])
+       user_message.submit( predict, [system_msg, user_message, top_p, temperature, chat_counter, chatbot, state], [chatbot, state, chat_counter, server_status_code],)  #openai_api_key
+       run_btn.click( predict, [system_msg, user_message, top_p, temperature, chat_counter, chatbot, state], [chatbot, state, chat_counter, server_status_code],)  #openai_api_key
        
-       b1.click(reset_textbox, [], [inputs])
-       inputs.submit(reset_textbox, [], [inputs])
+       user_message.submit(set_visible_false, [], [system_msg])
+       run_btn.click(set_visible_false, [], [system_msg])
+       user_message.submit(set_visible_true, [], [accordion_msg])
+       run_btn.click(set_visible_true, [], [accordion_msg])
+       
+       run_btn.click(reset_textbox, [], [user_message])
+       user_message.submit(reset_textbox, [], [user_message])
    
        #Examples 
        with gr.Accordion(label="Examples for System message:", open=False):
