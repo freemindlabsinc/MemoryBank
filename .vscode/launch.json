@@ -12,6 +12,15 @@
             "args": ["main:app", "--reload", "--port", "7000"],
             "jinja": true,
             "justMyCode": false
-          }
+        },
+        {
+            "name": "AIOU",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "streamlit",
+            "args": ["run","./streamlit/Home.py"],
+            "jinja": true,
+            "justMyCode": false
+        }        
     ]
 }

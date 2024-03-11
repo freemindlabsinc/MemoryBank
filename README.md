@@ -12,3 +12,5 @@ pip install "python-jose[cryptography]"
 pip install "passlib[bcrypt]"
 pip install text-generation
 pip install torchaudio
+pip install streamlit
+pip install streamlit=option-menu
