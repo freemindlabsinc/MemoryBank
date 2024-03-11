@@ -19,8 +19,17 @@ def transcribe(stream, new_chunk):
     txt = transcriber({"sampling_rate": sr, "raw": stream})["text"]
     return stream, txt
 
-
 def create_voice_tab():
+    demo = gr.Interface(
+        transcribe,
+        ["state", gr.Audio(sources=["microphone"], streaming=True)],
+        ["state", "text"],
+        live=True,
+    )
+    return demo
+
+
+def create_voice_tab2():
     with gr.Blocks() as demo:
         state = gr.State(value="")
         with gr.Row():
@@ -28,5 +37,8 @@ def create_voice_tab():
                 audio = gr.Audio(sources=["microphone"], type="filepath") 
             with gr.Column():
                 textbox = gr.Textbox()
-        audio.stream(fn=transcribe, inputs=[audio, state], outputs=[textbox, state])
+        
+        audio.stream(fn=transcribe, 
+                     inputs=[audio, state], 
+                     outputs=[textbox, state])
     return demo
