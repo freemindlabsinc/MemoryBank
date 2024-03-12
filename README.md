@@ -13,4 +13,4 @@ pip install "passlib[bcrypt]"
 pip install text-generation
 pip install torchaudio
 pip install streamlit
-pip install streamlit=option-menu
+pip install streamlit-option-menu
