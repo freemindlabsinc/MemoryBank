@@ -16,3 +16,4 @@ pip install streamlit
 pip install streamlit-option-menu
 pip install openai
 pip install youtube-transcript-api
+pip install bs4

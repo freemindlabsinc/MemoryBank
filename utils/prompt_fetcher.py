@@ -1,6 +1,6 @@
 import os
 import glob
-from typing import List
+from typing import List, Tuple
 
 class PredefinedPrompt:
     def __init__(self, title, system_content, user_content):
@@ -8,13 +8,14 @@ class PredefinedPrompt:
         self.system_content = system_content
         self.user_content = user_content 
 
-def get_predefined_prompts(prompt_dir) -> List[PredefinedPrompt]:
+def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') -> Tuple[List[PredefinedPrompt], int]:
     # Get all the prompt directories
     prompt_dirs = glob.glob(os.path.join(prompt_dir, '*'))
 
     prompt_args = []
+    default_prompt_index = None
 
-    for dir in prompt_dirs:
+    for index, dir in enumerate(prompt_dirs):
         try:
             title = os.path.basename(dir)
             system_file = os.path.join(dir, 'system.md')
@@ -34,13 +35,16 @@ def get_predefined_prompts(prompt_dir) -> List[PredefinedPrompt]:
             if os.path.exists(user_file):
                 with open(user_file, 'r') as f:
                     txt = f.read()
-                    if (len(txt)>0):                    
+                    if (len(txt)>0):
                         user_content = txt
 
-            # Create a new PromptArguments instance and add it to the list            
-            prompt_args.append(PredefinedPrompt(title, system_content, user_content))
-        except Exception as e:
-            #print(f'Error reading prompt directory {dir}: {e}')            
-            pass
+            prompt = PredefinedPrompt(title, system_content, user_content)
+            prompt_args.append(prompt)
 
-    return prompt_args
+            if title == default_prompt:
+                default_prompt_index = index
+
+        except Exception as e:
+            print(f"Error processing directory {dir}: {e}")
+
+    return prompt_args, default_prompt_index
