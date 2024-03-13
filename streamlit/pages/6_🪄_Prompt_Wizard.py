@@ -1,8 +1,9 @@
 import streamlit as st
 from utils.prompt_fetcher import get_predefined_prompts
-from utils.llm import complete
+from utils.llm import get_completion_stream
 from utils.transcript_fetcher import fetch_transcript
 from utils.webpage_fetcher import fetch_webpage
+import time
 
 st.set_page_config(
      page_title="Prompt Wizard",
@@ -73,9 +74,11 @@ user_content = st.text_area('User Text', max_chars=25000, height=300,
                              value=st.session_state.transcript)
      
 process = st.button('Process Prompt')
-if process:               
-     response = complete(selected, user_content)
-     st.markdown(response)
-
-
-#st.dataframe(prompts)
+if process:                            
+     def stream_response():
+          stream = get_completion_stream(selected, user_content)     
+          for chunk in stream:
+               choice = chunk.choices[0].delta.content
+               yield choice          
+     
+     st.write_stream(stream_response)

@@ -17,6 +17,10 @@ def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') 
 
     for index, dir in enumerate(prompt_dirs):
         try:
+            # break if the path is 'improve_prompt'
+            if dir == 'prompts\improve_prompt':
+                continue
+            
             title = os.path.basename(dir)
             system_file = os.path.join(dir, 'system.md')
             user_file = os.path.join(dir, 'user.md')
@@ -45,6 +49,6 @@ def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') 
                 default_prompt_index = index
 
         except Exception as e:
-            print(f"Error processing directory {dir}: {e}")
+            print(f"Error processing {dir}: {e}")
 
     return prompt_args, default_prompt_index
