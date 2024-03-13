@@ -14,3 +14,5 @@ pip install text-generation
 pip install torchaudio
 pip install streamlit
 pip install streamlit-option-menu
+pip install openai
+pip install youtube-transcript-api
