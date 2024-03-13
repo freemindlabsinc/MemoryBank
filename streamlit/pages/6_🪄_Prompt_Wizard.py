@@ -17,11 +17,11 @@ col1, col2 = st.columns([4, 1])
 
 # -Xtf6dk0ngI
 if 'youtube_id' not in st.session_state:
-    st.session_state.youtube_id = ''
+    st.session_state.youtube_id = '-Xtf6dk0ngI'
 if 'transcript' not in st.session_state:
     st.session_state.transcript= ''
 if 'url' not in st.session_state:
-    st.session_state.url = ''
+    st.session_state.url = 'https://alessandros-blog.ghost.io/'
 
 def download_transcript():
      vid = st.session_state.youtube_id

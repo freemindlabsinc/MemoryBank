@@ -15,6 +15,8 @@ def complete(prompt: PredefinedPrompt, user_text: str) -> str:
      try:
           response = openai.chat.completions.create(               
                model="gpt-4-1106-preview",
+               #model="gpt-4-32k-0613",
+               #model="gpt-3.5-turbo",
                messages=messages,
                temperature=0.0,
                top_p=1,
