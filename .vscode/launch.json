@@ -18,7 +18,7 @@
             "type": "debugpy",
             "request": "launch",
             "module": "streamlit",
-            "args": ["run","./streamlit/Home.py"],
+            "args": ["run","./Home.py"],
             "jinja": true,
             "justMyCode": false
         }        
