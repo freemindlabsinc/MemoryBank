@@ -23,7 +23,7 @@ if 'transcript' not in st.session_state:
 if 'url' not in st.session_state:
     st.session_state.url = ''
 if 'openai_key' not in st.session_state:
-    st.session_state.openai_key = '#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'    
+    st.session_state.openai_key = ''#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'    
 if 'model' not in st.session_state:
     st.session_state.model = 'gpt-3.5-turbo'
 
