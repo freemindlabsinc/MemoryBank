@@ -17,13 +17,13 @@ prompts, def_prompt_index = get_predefined_prompts(
 
 # -Xtf6dk0ngI
 if 'youtube_id' not in st.session_state:
-    st.session_state.youtube_id = ''
+    st.session_state.youtube_id = 'https://www.youtube.com/watch?v=iVbN95ica_k'
 if 'transcript' not in st.session_state:
     st.session_state.transcript= ''
 if 'url' not in st.session_state:
     st.session_state.url = ''
 if 'openai_key' not in st.session_state:
-    st.session_state.openai_key = ''    
+    st.session_state.openai_key = ''#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'    
 
 def download_transcript(video_id: str):
      # if the video id is a url, then if the domain is youtu.be (like https://youtu.be/xZgZLOq1JKU)
@@ -106,31 +106,29 @@ st.divider()
 # Convert the list of PredefinedPrompt objects to a DataFrame
 prompts_df = pd.DataFrame([vars(prompt) for prompt in prompts])
 
-col1, col2 = st.columns([3, 1])
-with col1:               
-     prompt_sequence = st.multiselect(
+              
+prompt_sequence = st.multiselect(
           'Prompts Pipeline',
           prompts_df,
           ["summarize_micro"],
           #["a_facebook_post_creator"],   
-    )
+          )
      
-with col2:
-     with st.popover("Explain"):
-          # get the system_content of the prompts in prompt sequence
-          # and create markdown for each and a divider betwene each
-          for selected in prompt_sequence:
-               selected = prompts_df[prompts_df['title'] == selected].iloc[0]
-               
-               # write the title as a green header in markdown               
-               st.markdown(f'### 📜:green[{selected.title}]')                            
-               st.markdown(f'{selected.system_content}')
-               st.divider()
+with st.expander("Pipelines Instructions"):
+     # get the system_content of the prompts in prompt sequence
+     # and create markdown for each and a divider betwene each
+     for selected in prompt_sequence:
+          selected = prompts_df[prompts_df['title'] == selected].iloc[0]
           
-          #if (selected.system_content is not None):
-          #     st.markdown(f'### System Prompt')
-          #     st.markdown(selected.system_content)
-          pass
+          # write the title as a green header in markdown               
+          st.markdown(f'### 📜:green[{selected.title}]')                            
+          st.markdown(f'{selected.system_content}')
+          st.divider()
+     
+     #if (selected.system_content is not None):
+     #     st.markdown(f'### System Prompt')
+     #     st.markdown(selected.system_content)
+     pass
 
 st.write('You selected:', prompt_sequence)
 
