@@ -23,7 +23,9 @@ if 'transcript' not in st.session_state:
 if 'url' not in st.session_state:
     st.session_state.url = ''
 if 'openai_key' not in st.session_state:
-    st.session_state.openai_key = ''#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'    
+    st.session_state.openai_key = '#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'    
+if 'model' not in st.session_state:
+    st.session_state.model = 'gpt-3.5-turbo'
 
 def download_transcript(video_id: str):
      # if the video id is a url, then if the domain is youtu.be (like https://youtu.be/xZgZLOq1JKU)
@@ -55,6 +57,12 @@ st.session_state.openai_key = st.text_input(
      type='password', 
      placeholder='Enter your OpenAI API Key here...',
      value=st.session_state.openai_key)
+
+st.session_state.model = st.selectbox(
+          'Model',
+          ("gpt-4-1106-preview", "gpt-4-32k-0613", "gpt-3.5-turbo"),
+          
+          )
 
 if (st.session_state.openai_key == ''):
      #st.warning('Please enter your OpenAI API Key')
@@ -151,7 +159,8 @@ if process:
                     stream = get_completion_stream(
                          prompt=selected, 
                          input_data=st.session_state.transcript,
-                         openai_key=st.session_state.openai_key
+                         openai_key=st.session_state.openai_key,
+                         model=st.session_state.model
                          )     
                     for chunk in stream:
                          choice = chunk.choices[0].delta.content
