@@ -16,11 +16,7 @@ def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') 
     default_prompt_index = None
 
     for index, dir in enumerate(prompt_dirs):
-        try:
-            # break if the path is 'improve_prompt'
-            if dir == 'prompts\improve_prompt':
-                continue
-            
+        try:            
             title = os.path.basename(dir)
             system_file = os.path.join(dir, 'system.md')
             user_file = os.path.join(dir, 'user.md')
@@ -30,17 +26,23 @@ def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') 
 
             # Read the system.md file if it exists
             if os.path.exists(system_file):
-                with open(system_file, 'r') as f:
-                    txt = f.read()
-                    if (len(txt)>0):
-                        system_content = txt
+                try:
+                    with open(system_file, 'r') as f:
+                        txt = f.read()
+                        if (len(txt)>0):
+                            system_content = txt
+                except Exception as e:
+                    system_content = e
 
             # Read the user.md file if it exists
             if os.path.exists(user_file):
-                with open(user_file, 'r') as f:
-                    txt = f.read()
-                    if (len(txt)>0):
-                        user_content = txt
+                try:
+                    with open(user_file, 'r') as f:
+                        txt = f.read()
+                        if (len(txt)>0):
+                            user_content = txt
+                except Exception as e:
+                    user_content = e
 
             prompt = PredefinedPrompt(title, system_content, user_content)
             prompt_args.append(prompt)

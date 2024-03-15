@@ -1,15 +1,20 @@
 from utils.prompt_fetcher import get_predefined_prompts, PredefinedPrompt
 import openai
+import os
 from openai import Stream
 from openai.types.chat import ChatCompletionChunk
-     
-def get_completion_stream(prompt: PredefinedPrompt, user_text: str) -> Stream[ChatCompletionChunk]:
-     system_content = prompt.system_content
-     user_file_content = prompt.user_content
 
+# see https://github.com/danielmiessler/fabric?tab=readme-ov-file#just-use-the-patterns     
+     
+def get_completion_stream(prompt: PredefinedPrompt, input_data: str, openai_key: str = None):
      # Build the API call
-     system_message = {"role": "system", "content": system_content}     
-     user_message = {"role": "user", "content": (user_file_content or "") + "\n" + (user_text or "")}
+     openai.api_key = openai_key or os.getenv("OPENAI_API_KEY")
+     
+     system_message = {"role": "system", "content": prompt.system_content}     
+     if (prompt.user_content is None):
+          prompt.user_content = ""
+                    
+     user_message = {"role": "user", "content": prompt.user_content + "\n" + input_data}     
      messages = [system_message, user_message]
      try:
           stream = openai.chat.completions.create(               
