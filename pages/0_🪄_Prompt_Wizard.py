@@ -17,13 +17,13 @@ prompts, def_prompt_index = get_predefined_prompts(
 
 # -Xtf6dk0ngI
 if 'youtube_id' not in st.session_state:
-    st.session_state.youtube_id = 'https://www.youtube.com/watch?v=iVbN95ica_k'
+    st.session_state.youtube_id = ''#https://www.youtube.com/watch?v=iVbN95ica_k'
 if 'transcript' not in st.session_state:
     st.session_state.transcript= ''
 if 'url' not in st.session_state:
     st.session_state.url = ''
 if 'openai_key' not in st.session_state:
-    st.session_state.openai_key = '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'    
+    st.session_state.openai_key = 'lemmein'
 if 'model' not in st.session_state:
     st.session_state.model = 'gpt-3.5-turbo'
 
@@ -155,11 +155,17 @@ if process:
                     selected = prompts_df[prompts_df['title'] == selected].iloc[0]
                                                             
                     st.subheader(selected.title)
+                         
+                    # open api key hack
+                    if st.session_state.openai_key == 'lemmein':
+                         key = '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'    
+                    else:
+                         key = st.session_state.openai_key                    
                               
                     stream = get_completion_stream(
                          prompt=selected, 
                          input_data=st.session_state.transcript,
-                         openai_key=st.session_state.openai_key,
+                         openai_key=key,
                          model=st.session_state.model
                          )     
                     for chunk in stream:
