@@ -14,7 +14,7 @@ pip install "passlib[bcrypt]"
 pip install text-generation
 pip install torchaudio
 
-pip install streamlit
+pip install streamlit==1.32.1
 pip install openai
 pip install youtube-transcript-api
 pip install bs4
