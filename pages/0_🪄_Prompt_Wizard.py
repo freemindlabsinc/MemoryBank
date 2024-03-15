@@ -115,8 +115,6 @@ prompt_sequence = st.multiselect(
           )
      
 with st.expander("Pipelines Instructions"):
-     # get the system_content of the prompts in prompt sequence
-     # and create markdown for each and a divider betwene each
      for selected in prompt_sequence:
           selected = prompts_df[prompts_df['title'] == selected].iloc[0]
           
@@ -124,11 +122,6 @@ with st.expander("Pipelines Instructions"):
           st.markdown(f'### 📜:green[{selected.title}]')                            
           st.markdown(f'{selected.system_content}')
           st.divider()
-     
-     #if (selected.system_content is not None):
-     #     st.markdown(f'### System Prompt')
-     #     st.markdown(selected.system_content)
-     pass
 
 st.write('You selected:', prompt_sequence)
 
