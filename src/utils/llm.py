@@ -1,4 +1,4 @@
-from utils.prompt_fetcher import get_predefined_prompts, PredefinedPrompt
+from src.utils.prompt_fetcher import PredefinedPrompt
 import openai
 import os
 from openai import Stream

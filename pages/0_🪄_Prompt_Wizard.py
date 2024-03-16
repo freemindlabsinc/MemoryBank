@@ -1,8 +1,8 @@
 import streamlit as st
-from utils.prompt_fetcher import get_predefined_prompts
-from utils.llm import get_completion_stream
-from utils.transcript_fetcher import fetch_transcript
-from utils.webpage_fetcher import fetch_webpage
+from src.utils.prompt_fetcher import get_predefined_prompts
+from src.utils.llm import get_completion_stream
+from src.utils.transcript_fetcher import fetch_transcript
+from src.utils.webpage_fetcher import fetch_webpage
 import pandas as pd
 
 st.set_page_config(
@@ -11,7 +11,7 @@ st.set_page_config(
      )
 
 prompts, def_prompt_index = get_predefined_prompts(
-     prompt_dir='prompts',
+     prompt_dir='data/prompts',
      default_prompt='summarize_micro')
      #default_prompt='extract_wisdom')
 
@@ -27,22 +27,12 @@ if 'openai_key' not in st.session_state:
 if 'model' not in st.session_state:
     st.session_state.model = 'gpt-3.5-turbo'
 
-def download_transcript(video_id: str):
-     # if the video id is a url, then if the domain is youtu.be (like https://youtu.be/xZgZLOq1JKU)
-     # then the video id is the last part of the url, excluding anything after a ? 
-     # otherwise, if the video is of www.youtube.com (like ) https://www.youtube.com/watch?v=xZgZLOq1JKU)
-     # then extract the value of the query parameter v
-     if 'youtu.be' in video_id:
-          video_id = video_id.split('/')[-1].split('?')[0]
-     elif 'youtube.com' in video_id:
-          video_id = video_id.split('v=')[-1].split('&')[0]
-     
+def download_transcript(video_id: str):    
      transcript = fetch_transcript(video_id)
      st.session_state.youtube_id = video_id
      st.session_state.transcript = transcript
 
 def fetch_url(url: str):
-     #url = st.session_state.url
      content = fetch_webpage(url)
      st.session_state.url = url    
      st.session_state.transcript = content

@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from utils.data_generator import generate_selectable_sources
+from src.utils.data_generator import generate_selectable_sources
 
 st.set_page_config(
     page_title="File Manager",

@@ -1,5 +1,6 @@
 import os
 import glob
+import streamlit as st
 from typing import List, Tuple
 
 class PredefinedPrompt:
@@ -8,6 +9,7 @@ class PredefinedPrompt:
         self.system_content = system_content
         self.user_content = user_content 
 
+@st.cache_data(ttl=10) #seconds
 def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') -> Tuple[List[PredefinedPrompt], int]:
     # Get all the prompt directories
     prompt_dirs = glob.glob(os.path.join(prompt_dir, '*'))

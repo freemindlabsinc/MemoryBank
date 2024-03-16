@@ -10,7 +10,7 @@ st.set_page_config(
 col1, space, col2 = st.columns([1,1, 4])
 
 with col1:    
-    st.image("https://i0.wp.com/freemindlabs.com/wp-content/uploads/2024/01/Free-Mind-Labs-logo.png?w=625&ssl=1", 
+    st.image("assets/images/Free-Mind-Labs-logo.webp", 
              width=150,)
 with col2:
     st.write("# 💠Welcome to A.I. Of You! ")
