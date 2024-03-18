@@ -20,7 +20,7 @@ def save_prompt(prompt: PredefinedPrompt):
 prompts = prompt_fetcher.get_predefined_prompts()     
 
 # UI
-col1, col2 = st.columns([3, 1])
+col1, col2 = st.columns([4, 1])
 
 with col1:
     st.selectbox(label='Select Prompt', 
