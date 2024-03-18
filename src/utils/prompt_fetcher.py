@@ -10,7 +10,7 @@ class PredefinedPrompt:
         self.user_content = user_content 
 
 @st.cache_data(ttl=10) #seconds
-def get_predefined_prompts(prompt_dir:str, default_prompt:str='extract_wisdom') -> Tuple[List[PredefinedPrompt], int]:
+def get_predefined_prompts(prompt_dir:str = 'data/prompts', default_prompt:str = 'summarize_micro') -> Tuple[List[PredefinedPrompt], int]:
     # Get all the prompt directories
     prompt_dirs = glob.glob(os.path.join(prompt_dir, '*'))
 

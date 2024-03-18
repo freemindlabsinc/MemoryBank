@@ -2,10 +2,10 @@ import streamlit as st
 import src.components.page_configurator as page_config
 
 page_config.initialize_page(
-    icon="🎙️",    
-    title="Dictate",
+    icon="📥",
+    title="Import",
     desc="""
-    This module lets you dictate to the AI using your voice.
+    Import data from various sources.
     """,
     layout="wide",
     #initial_sidebar_state="expanded",

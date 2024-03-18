@@ -1,8 +1,13 @@
 import streamlit as st
+import src.components.page_configurator as page_config
 
-st.set_page_config(
-    page_title="Chat",
-    page_icon="💭",    
-)
+page_config.initialize_page(
+     icon="🪄",
+     title="Chat",
+     desc="""
+     This module lets you chat with the AI using your personal data.
+     """,)
 
-st.write("# 💭Chat")
+page_config.initialize_session_state({     
+     'model': 'gpt-3.5-turbo'
+     })

@@ -1,5 +1,11 @@
 from youtube_transcript_api import YouTubeTranscriptApi 
+import json
 
+
+def _format_transcript_json(transcript):
+    # serialize the argument transcript to json in a readanble format 
+    return json.dumps(transcript, indent=4, sort_keys=True, ensure_ascii=False)
+    
 
 def fetch_transcript(video_id: str):        
     try:
@@ -12,10 +18,10 @@ def fetch_transcript(video_id: str):
             video_id = video_id.split('v=')[-1].split('&')[0]         
     
         transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
-        return transcript
+        return _format_transcript_json(transcript)
     except Exception as e:
         try:
             transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en-GB'])
-            return transcript
+            return _format_transcript_json(transcript)
         except Exception as e:
             return f'Error: {e}'

@@ -1,27 +1,31 @@
 import streamlit as st
-#from streamlit_option_menu import option_menu
+import src.components.page_configurator as page_config
 
-st.set_page_config(
-    page_title="A.I. Of You",
-    page_icon="💠",    
+page_config.initialize_page(
+    icon="💠",
+    title="AI Of You",
+    desc="""
+    This is the home page of the application.
+    """,
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    }
 )
 
 # Create two columns
-col1, space, col2 = st.columns([1,1, 4])
+#st.image("assets/images/Free-Mind-Labs-logo.webp", width=150,)
+st.write("Welcome to A.I. Of You! ")
+st.write("""
+This is the home page of the application. At some point it will show useful information about the app
+and some diagrams or charts.
 
-with col1:    
-    st.image("assets/images/Free-Mind-Labs-logo.webp", 
-             width=150,)
-with col2:
-    st.write("# 💠Welcome to A.I. Of You! ")
-    st.write("*The Swiss Army Knife for AI*")
-
-
-# Write a brief description of the app
-st.write("This is a test.")
-st.write("Information about the application will come later...")
+You can navigate to different modules using the sidebar on the left.
+Only the following modules are functional right now:
+""")
 
 # Create a section for each page in the app
-st.page_link("pages/0_🪄_Prompt_Wizard.py", label="Prompt Wizard", icon="🪄")
+st.page_link("pages/3_🪄_Prompt_Wizard.py", label=":green[Prompt Wizard]", icon="🪄")
 #st.write("Description of what Prompt Wizard does.")
 # Add more sections as needed

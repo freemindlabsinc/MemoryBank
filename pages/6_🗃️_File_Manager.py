@@ -1,13 +1,22 @@
 import streamlit as st
 import pandas as pd
 from src.utils.data_generator import generate_selectable_sources
+import src.components.page_configurator as page_config
 
-st.set_page_config(
-    page_title="File Manager",
-    page_icon="🗃️",    
+page_config.initialize_page(
+    icon="🗃️",    
+    title="File Manager",
+    desc="""
+    This module lets you manage your files.
+    """,
+    layout="wide",
+    #initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    }
 )
-
-st.write("# 🗃️File Manager")
 
 sources = generate_selectable_sources()
 df = pd.DataFrame(sources)

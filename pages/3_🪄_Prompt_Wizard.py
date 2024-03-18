@@ -3,29 +3,26 @@ from src.utils.prompt_fetcher import get_predefined_prompts
 from src.utils.llm import get_completion_stream
 from src.utils.transcript_fetcher import fetch_transcript
 from src.utils.webpage_fetcher import fetch_webpage
+from src.components import page_configurator as page_config
 import pandas as pd
 
-st.set_page_config(
-     page_title="Prompt Wizard",
-     page_icon="🪄"
-     )
+page_config.initialize_page(
+     "🪄", 
+     "Prompt Wizard", 
+     """This module lets you import resources from the web 
+     and run one or multiple prompts on the imported data""")
+
+page_config.initialize_session_state({
+     'youtube_id': 'https://www.youtube.com/watch?v=iVbN95ica_k',
+     'transcript': '',
+     'url': '',
+     'openai_key': 'lemmein',
+     'model': 'gpt-3.5-turbo'
+     })
 
 prompts, def_prompt_index = get_predefined_prompts(
      prompt_dir='data/prompts',
-     default_prompt='summarize_micro')
-     #default_prompt='extract_wisdom')
-
-# -Xtf6dk0ngI
-if 'youtube_id' not in st.session_state:
-    st.session_state.youtube_id = ''#https://www.youtube.com/watch?v=iVbN95ica_k'
-if 'transcript' not in st.session_state:
-    st.session_state.transcript= ''
-if 'url' not in st.session_state:
-    st.session_state.url = ''
-if 'openai_key' not in st.session_state:
-    st.session_state.openai_key = 'lemmein'
-if 'model' not in st.session_state:
-    st.session_state.model = 'gpt-3.5-turbo'
+     default_prompt='summarize_micro') #default_prompt='extract_wisdom')
 
 def download_transcript(video_id: str):    
      transcript = fetch_transcript(video_id)
@@ -39,64 +36,58 @@ def fetch_url(url: str):
 
 # -------------------
 
-st.header("🪄Prompt Wizard")
 
 # add a text box to enter openai_key as a password
-st.session_state.openai_key = st.text_input(
-     'OpenAI API Key', 
-     type='password', 
-     placeholder='Enter your OpenAI API Key here...',
-     value=st.session_state.openai_key)
+st.text_input('OpenAI API Key', 
+              type='password', 
+              placeholder='Enter your OpenAI API Key here...',
+              key='openai_key')
 
-st.session_state.model = st.selectbox(
-          'Model',
-          ("gpt-4-1106-preview", "gpt-3.5-turbo"),
-          
-          )
-
-if (st.session_state.openai_key == ''):
-     #st.warning('Please enter your OpenAI API Key')
-     exit()
+st.selectbox('Model',
+             ("gpt-3.5-turbo", "gpt-4-1106-preview"),
+             key='model')
 
 # create tabs for youtube and url
 youtube_tab, webpage_tab = st.tabs(["YouTube", "Web Page"])
-with youtube_tab:
-     st.session_state.youtube_id = st.text_input(
-          'YouTube Video', 
-          placeholder='Enter YouTube Video url or the id of the video.',
-          value=st.session_state.youtube_id)
 
+with youtube_tab:
+     st.text_input('YouTube Video',                
+                   placeholder='Enter YouTube Video url or the id of the video.',
+                   key='youtube_id')
+
+     
      st.button('Download Transcript', 
                on_click=download_transcript,
-               args=[st.session_state.youtube_id]
-               )
+               disabled=st.session_state.youtube_id == '',
+               args=[st.session_state.youtube_id])
 
 with webpage_tab:
-     st.session_state.url = st.text_input(
+     st.text_input(
           'Web Page', 
           placeholder='Enter the url of the web page to scrape.',
-          value=st.session_state.url)
+          key='url')
 
      st.button('Scrape Web Page', 
                on_click=fetch_url,
+               disabled=st.session_state.url == '',
                args=[st.session_state.url])
-     
 
 
-if not st.session_state.youtube_id and not st.session_state.url:    
-     exit()  
 
-if st.session_state.transcript == '':
-     exit()
+#if not st.session_state.youtube_id and not st.session_state.url:    
+#     exit()  
+
+#if st.session_state.transcript == '':
+#     exit()
      
      
 # Text
 st.divider()     
 
-with st.expander(f"Downloaded Text"):
+with st.expander(f"Downloaded Text", expanded= st.session_state.transcript != ''):
      st.session_state.transcript = st.text_area('Text', 
                                            max_chars=25000, 
-                                           height=300, 
+                                           height=300,                                                                                   
                                            value=st.session_state.transcript)
 
 st.divider()
