@@ -1,9 +1,9 @@
 import streamlit as st
-from src.utils.prompt_fetcher import get_predefined_prompts
-from src.utils.llm import get_completion_stream
-from src.utils.transcript_fetcher import fetch_transcript
-from src.utils.webpage_fetcher import fetch_webpage
-from src.components import page_configurator as page_config
+import src.utils.prompt_fetcher as prompt_fetcher
+import src.utils.llm as llm
+import src.utils.transcript_fetcher as transcript_fetcher 
+import src.utils.webpage_fetcher as webpage_fetcher
+import src.components.page_configurator as page_config
 import pandas as pd
 
 page_config.initialize_page(
@@ -20,17 +20,15 @@ page_config.initialize_session_state({
      'model': 'gpt-3.5-turbo'
      })
 
-prompts, def_prompt_index = get_predefined_prompts(
-     prompt_dir='data/prompts',
-     default_prompt='summarize_micro') #default_prompt='extract_wisdom')
+prompts = prompt_fetcher.get_predefined_prompts()
 
 def download_transcript(video_id: str):    
-     transcript = fetch_transcript(video_id)
+     transcript = transcript_fetcher.fetch_transcript(video_id)
      st.session_state.youtube_id = video_id
      st.session_state.transcript = transcript
 
 def fetch_url(url: str):
-     content = fetch_webpage(url)
+     content =  webpage_fetcher.fetch_webpage(url)
      st.session_state.url = url    
      st.session_state.transcript = content
 
@@ -72,15 +70,6 @@ with webpage_tab:
                disabled=st.session_state.url == '',
                args=[st.session_state.url])
 
-
-
-#if not st.session_state.youtube_id and not st.session_state.url:    
-#     exit()  
-
-#if st.session_state.transcript == '':
-#     exit()
-     
-     
 # Text
 st.divider()     
 

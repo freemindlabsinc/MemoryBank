@@ -10,7 +10,7 @@ def get_completion_stream(prompt: PredefinedPrompt, input_data: str, openai_key:
      # Build the API call
      openai.api_key = openai_key or os.getenv("OPENAI_API_KEY")
      
-     system_message = {"role": "system", "content": prompt.system_content}     
+     system_message = {"role": "system", "content": prompt.system_prompt}     
      if (prompt.user_content is None):
           prompt.user_content = ""
                     

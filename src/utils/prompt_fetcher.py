@@ -1,58 +1,72 @@
 import os
 import glob
 import streamlit as st
-from typing import List, Tuple
+from typing import List
+from model.Prompts import PredefinedPrompt
 
-class PredefinedPrompt:
-    def __init__(self, title, system_content, user_content):
-        self.title = title
-        self.system_content = system_content
-        self.user_content = user_content 
 
 @st.cache_data(ttl=10) #seconds
-def get_predefined_prompts(prompt_dir:str = 'data/prompts', default_prompt:str = 'summarize_micro') -> Tuple[List[PredefinedPrompt], int]:
+def get_predefined_prompts(prompt_dir:str = 'data/prompts') -> List[PredefinedPrompt]:
     # Get all the prompt directories
     prompt_dirs = glob.glob(os.path.join(prompt_dir, '*'))
 
     prompt_args = []
-    default_prompt_index = None
-
+    idx = 0
     for index, dir in enumerate(prompt_dirs):
         try:            
-            title = os.path.basename(dir)
-            system_file = os.path.join(dir, 'system.md')
-            user_file = os.path.join(dir, 'user.md')
-
-            system_content = None
-            user_content = None
-
             # Read the system.md file if it exists
-            if os.path.exists(system_file):
-                try:
-                    with open(system_file, 'r') as f:
-                        txt = f.read()
-                        if (len(txt)>0):
-                            system_content = txt
-                except Exception as e:
-                    system_content = e
+            system_file = os.path.join(dir, 'system.md')            
+            system_prompt = _read_file(system_file)            
 
             # Read the user.md file if it exists
-            if os.path.exists(user_file):
-                try:
-                    with open(user_file, 'r') as f:
-                        txt = f.read()
-                        if (len(txt)>0):
-                            user_content = txt
-                except Exception as e:
-                    user_content = e
+            user_file = os.path.join(dir, 'user.md')
+            user_content = _read_file(user_file)
+            
+            # Other
+            dir_name = os.path.basename(dir)
+            title = dir_name_to_title(dir_name)
 
-            prompt = PredefinedPrompt(title, system_content, user_content)
-            prompt_args.append(prompt)
-
-            if title == default_prompt:
-                default_prompt_index = index
+            prompt = PredefinedPrompt(
+                id=dir_name, 
+                title=title, 
+                system_prompt=system_prompt, 
+                user_content=user_content,
+                description=get_description(title),
+                icon=get_random_emoji()
+                )
+                
+            prompt_args.append(prompt)            
 
         except Exception as e:
             print(f"Error processing {dir}: {e}")
 
-    return prompt_args, default_prompt_index
+    return prompt_args
+
+
+def _read_file(filename: str) -> str:
+    if (os.path.exists(filename)):
+        try:
+            with open(filename, 'r') as f:
+                txt = f.read()
+                if (len(txt)>0):
+                    return txt
+        except Exception as e:
+            return e
+    
+    return ''  
+    
+def dir_name_to_title(dir_name: str) -> str:
+    res = dir_name.replace('_', ' ').replace('-', ' ')
+    
+    # capitalize the first letter of each word
+    res = ' '.join([word.capitalize() for word in res.split()])
+    
+    return res
+
+def get_random_emoji():
+    import random
+    emojis = ["📚", "📜", "📖", "📝", "📓", "📒", "📔", "📕", "📗", "📘", "📙", "📚", "📜", "📖", "📝", "📓", "📒", "📔", "📕", "📗", "📘", "📙"]
+    return random.choice(emojis)
+
+def get_description(title: str) -> str:
+    return f"{title} needs a description at some point..."
