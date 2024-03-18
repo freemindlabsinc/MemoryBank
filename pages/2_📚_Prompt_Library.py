@@ -37,31 +37,37 @@ with col2:
     
 do_expand = True
 
-with st.expander(f":green[📋Details]", expanded=do_expand):
-    st.text_input(label="Name", value= f"{prompt.title}", key='title')    
-    st.text_area(label="Description",
+expander_color = ":blue"
+label_color = ":orange"
+
+with st.expander(f"{expander_color}[📋Details]", expanded=do_expand):
+    st.text_input(label=f"{label_color}[Name]", value= f"{prompt.title}", key='title')    
+    st.text_area(label=f"{label_color}[Description]",
                 value= f"{prompt.description}",
                 height=100,              
                 help="This is the description of the prompt",
                 key='description'
                 )
 
-with st.expander(":blue[🤖System Prompt]", expanded=do_expand):
-    st.text_area(
-        label="Text",
+with st.expander(f"{expander_color}[🤖System Prompt]", expanded=do_expand):
+    st.markdown(
+    #st.text_area(
+        #label=f"{label_color}[Text]",
         #label_visibility="collapsed",
-        value= f"{prompt.system_prompt}",
-        height=300,              
+        body= f"{prompt.system_prompt}",        
+        #height=300,              
         help="This is the prompt that will be sent to the LLM",
-        key='system_prompt'
+        #key='system_prompt'
         )
 
-with st.expander(":gray[🧾User Content]", expanded=False):
-    st.text_area(label="Text",
-                 #label_visibility="collapsed",
-                 value= f"{prompt.user_content}",
-                 height=100,              
-                 help="Not sure at this point what this is for",
-                 key='user_content',                               
-                )
+with st.expander(f"{expander_color}[🧾User Content]", expanded=False):
+    st.markdown(
+    #st.text_area(
+        #label=f"{label_color}[Text]",
+        #label_visibility="collapsed",
+        body= f"{prompt.user_content or 'None'}",
+        #height=100,              
+        help="Not sure at this point what this is for",
+        #key='user_content',                               
+    )
     

@@ -10,7 +10,8 @@ def initialize_page(
     
     # UI
     st.markdown(f"## {icon}{title}")
-    st.write(f"""🔖 *:blue[{desc}]*""")
+    with st.container(border=True):
+        st.write(f"""*:white[{desc}]*""")
     
 def initialize_session_state(default_values: dict):    
     for key, value in default_values.items():
