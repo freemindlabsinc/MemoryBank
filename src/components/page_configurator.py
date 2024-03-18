@@ -12,7 +12,10 @@ def initialize_page(
     st.markdown(f"## {icon}{title}")
     st.write(f"""🔖 *:blue[{desc}]*""")
     
-def initialize_session_state(default_values: dict):
+def initialize_session_state(default_values: dict):    
     for key, value in default_values.items():
         if key not in st.session_state:
-            st.session_state[key] = value    
+            #st.write(f"Setting {key} to {value}")
+            st.session_state[key] = value  
+        #else:
+            #st.write(f"Session state {key} already set to {st.session_state[key]}")

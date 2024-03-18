@@ -4,8 +4,7 @@ import src.components.page_configurator as page_config
 page_config.initialize_page(
      icon="🪄",
      title="Chat",
-     desc="""
-     This module lets you chat with the AI using your personal data.
+     desc="""This module will let you chat with an LLM using your data.     
      """,)
 
 page_config.initialize_session_state({     

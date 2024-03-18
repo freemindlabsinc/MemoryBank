@@ -2,7 +2,7 @@ import os
 import glob
 import streamlit as st
 from typing import List
-from model.Prompts import PredefinedPrompt
+from models.Prompts import PredefinedPrompt
 
 
 @st.cache_data(ttl=10) #seconds
@@ -65,7 +65,8 @@ def dir_name_to_title(dir_name: str) -> str:
 
 def get_random_emoji():
     import random
-    emojis = ["📚", "📜", "📖", "📝", "📓", "📒", "📔", "📕", "📗", "📘", "📙", "📚", "📜", "📖", "📝", "📓", "📒", "📔", "📕", "📗", "📘", "📙"]
+    emojis = ["📜"]
+    #emojis = ["📚", "📜", "📖", "📝", "📓", "📒", "📔", "📕", "📗", "📘", "📙", "📚", "📜", "📖", "📝", "📓", "📒", "📔", "📕", "📗", "📘", "📙"]
     return random.choice(emojis)
 
 def get_description(title: str) -> str:
