@@ -40,6 +40,8 @@ def get_predefined_prompts(prompt_dir:str = 'data/prompts') -> List[PredefinedPr
         except Exception as e:
             print(f"Error processing {dir}: {e}")
 
+    #return prompt_args sorted by title
+    return sorted(prompt_args, key=lambda x: x.title)
     return prompt_args
 
 
