@@ -5,7 +5,6 @@ import src.utils.transcript_fetcher as transcript_fetcher
 import src.utils.webpage_fetcher as webpage_fetcher
 import src.components.page_configurator as page_config
 import src.components.formatting_utils as formatting_utils
-import pandas as pd
 
 page_config.initialize_page(
      "🪄", 
@@ -152,34 +151,31 @@ with st.expander(f"{expander_color}[Prompts Pipeline]", expanded=True):
 if process:         
      def stream_response():
           tab_names = [prompt.title for prompt in pipeline]
+          
           tabs = st.tabs(tab_names)
           
           tab_idx = 0
           for prompt in pipeline:               
                tab = tabs[tab_idx]               
                tab_idx += 1
+                              
                with tab:
                     st.subheader(prompt.title)
                          
                     # FIXME open api key hack
                     key = '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'    
-                              
+                    tab_txt = ""
+                                   
                     stream = llm.get_completion_stream(
                          prompt=prompt, 
                          input_data=st.session_state.transcript,
                          openai_key=key,
-                         model=st.session_state.model
-                         )     
+                         model=st.session_state.model)
+                    
                     for chunk in stream:
                          choice = chunk.choices[0].delta.content
-                         yield choice          
-                         
-                    st.divider()
-                    
-                    st.session_state['generating'] = False
+                         tab_txt += choice or ''
+                         yield choice                    
+                                        
+     st.write_stream(stream_response)          
      
-     try:    
-          st.session_state['generating'] = True
-          st.write_stream(stream_response)
-     finally:
-          st.session_state['generating'] = False
