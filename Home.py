@@ -26,6 +26,7 @@ Only the following modules are functional right now:
 """)
 
 # Create a section for each page in the app
+st.page_link("pages/2_📚_Prompt_Library.py", label=":blue[Prompt Library]", icon="📚")
 st.page_link("pages/3_🪄_Prompt_Wizard.py", label=":green[Prompt Wizard]", icon="🪄")
 #st.write("Description of what Prompt Wizard does.")
 # Add more sections as needed
