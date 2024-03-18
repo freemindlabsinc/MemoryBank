@@ -1,11 +1,11 @@
 import streamlit as st
 import src.components.page_configurator as page_config
 import src.utils.prompt_fetcher as prompt_fetcher
-from models.Prompts import PredefinedPrompt
+from src.models.Prompts import PredefinedPrompt
 import src.components.formatting_utils as formatting_utils
 import pandas as pd
 
-# Data
+# Initialization
 
 page_config.initialize_page(
     icon="📚",

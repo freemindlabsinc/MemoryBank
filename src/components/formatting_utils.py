@@ -1,5 +1,5 @@
 from typing import List
-from models.Prompts import PredefinedPrompt
+from src.models.Prompts import PredefinedPrompt
 
 def get_fancy_captions(prompts) -> List[str]:
     res = []

@@ -35,8 +35,6 @@ def fetch_url(url: str):
 
 # -------------------
 
-
-# add a text box to enter openai_key as a password
 #st.text_input('OpenAI API Key', 
 #              type='password', 
 #              placeholder='Enter your OpenAI API Key here...',
@@ -127,9 +125,6 @@ with st.expander(f"{expander_color}[Text]", expanded=True):
                   key='transcript')
 
      
-# Convert the list of PredefinedPrompt objects to a DataFrame
-#prompts_df = pd.DataFrame([vars(prompt) for prompt in prompts])
-#selections = formatting_utils.get_fancy_captions(prompts)                  
 with st.expander(f"{expander_color}[Prompts Pipeline]", expanded=True):
      col1, col2 = st.columns([4, 1])
      

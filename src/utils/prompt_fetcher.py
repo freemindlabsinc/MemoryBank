@@ -2,7 +2,7 @@ import os
 import glob
 import streamlit as st
 from typing import List
-from models.Prompts import PredefinedPrompt
+from src.models.Prompts import PredefinedPrompt
 
 
 @st.cache_data(ttl=10) #seconds
