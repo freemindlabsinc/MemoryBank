@@ -17,8 +17,8 @@ page_config.initialize_page(
 
 login_token = msal_authentication(
     auth={
-        "clientId": "aaaaaaa-bbbb-cccc-dddd-eeeeeeeeeee",
-        "authority": "https://login.microsoftonline.com/aaaaaaa-bbbb-cccc-dddd-eeeeeeeeeee",
+        "clientId": "a8d63b95-8318-43e9-b908-fb99672794a0",
+        "authority": "https://login.microsoftonline.com/f804952a-b15a-462f-bab4-bf6397ecc672",
         "redirectUri": "/",
         "postLogoutRedirectUri": "/"
     }, # Corresponds to the 'auth' configuration for an MSAL Instance
@@ -27,7 +27,7 @@ login_token = msal_authentication(
         "storeAuthStateInCookie": False
     }, # Corresponds to the 'cache' configuration for an MSAL Instance
     login_request={
-        "scopes": ["aaaaaaa-bbbb-cccc-dddd-eeeeeeeeeee/.default"]
+        "scopes": ["a8d63b95-8318-43e9-b908-fb99672794a0/.default"]
     }, # Optional
     logout_request={}, # Optional
     login_button_text="Login", # Optional, defaults to "Login"
@@ -37,6 +37,7 @@ login_token = msal_authentication(
     key=1 # Optional if only a single instance is needed
 )
 
+st.write(login_token)
 st.write("Welcome to A.I. Of You! ")
 st.write("""
 This is the home page of the application. At some point it will show useful information about the app
