@@ -18,24 +18,40 @@ page_config.initialize_page(
     }
 )
 
-sources = generate_selectable_sources()
-df = pd.DataFrame(sources)
+if 'sources' not in st.session_state:
+    st.session_state['sources'] = generate_selectable_sources()
+    st.write(":red[Read sources]")
+    
+uploaded_files = st.file_uploader("Upload files", accept_multiple_files=True)
+for uploaded_file in uploaded_files:
+    bytes_data = uploaded_file.read()
+    
+    
+    
+    st.write("filename:", uploaded_file.name)        
+    
+    # generate a random id like "FA1C2187AFD"
+    import random 
+    import string
 
-col1, col2 = st.columns([1, 2])
+    id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    
+    
+    new_entry = { 
+        "key": id, 
+        "is_selected": True, 
+        "type": "Uploaded File", 
+        "title": uploaded_file.name,         
+        "source": "//" + uploaded_file.name
+        }        
+    
+    st.session_state['sources'].append(new_entry)
+    
 
-with col1:
-    pass
+df = pd.DataFrame(st.session_state['sources'])
 
-with col2:
-    cb = st.checkbox("Make Grid Editable", value=False)
-    if cb:
-        num_rows = "dynamic"
-    else:
-        num_rows = "fixed"
-
-    st.data_editor(df, 
-                key="key", 
-                num_rows=num_rows, 
-                use_container_width=False,
-                hide_index=True,                
-                )
+st.data_editor(df, 
+            key="key", 
+            num_rows="fixed", 
+            use_container_width=False,
+            hide_index=True,)
