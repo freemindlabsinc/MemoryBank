@@ -129,7 +129,7 @@ with st.expander(f"{expander_color}[Prompts Pipeline]", expanded=True):
      col1, col2 = st.columns([4, 1])
      
      with col1:
-          def_prompt = next((x for x in prompts if x.title == 'Summarize'), None)
+          def_prompt = next((x for x in prompts if x.title == 'Summarize Micro'), None)
           
           st.multiselect(' ',
                          prompts,
@@ -143,6 +143,7 @@ with st.expander(f"{expander_color}[Prompts Pipeline]", expanded=True):
           pipeline = st.session_state['selected_prompts']    
           process = st.button('Execute')
           
+         
 if process:         
      def stream_response():
           tab_names = [prompt.title for prompt in pipeline]

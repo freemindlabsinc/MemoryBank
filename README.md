@@ -18,3 +18,4 @@ pip install streamlit==1.32.1
 pip install openai
 pip install youtube-transcript-api
 pip install bs4
+pip install msal_streamlit_authentication
