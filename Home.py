@@ -1,8 +1,5 @@
 import streamlit as st
 import src.components.page_configurator as page_config
-import streamlit_authenticator as stauth
-from streamlit_authenticator.validator import Validator
-import yaml
 from yaml.loader import SafeLoader
 
 page_config.initialize_page(
