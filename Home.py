@@ -1,6 +1,5 @@
 import streamlit as st
 import src.components.page_configurator as page_config
-from yaml.loader import SafeLoader
 
 page_config.initialize_page(
     icon="💠",
