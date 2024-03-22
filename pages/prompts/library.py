@@ -1,23 +1,17 @@
 import streamlit as st
-import src.components.page_configurator as page_config
-import src.utils.prompt_fetcher as prompt_fetcher
-from src.models.Prompts import PredefinedPrompt
-import src.components.formatting_utils as formatting_utils
-import pandas as pd
+import src.components.page_header as page_config
+import st_pages as stp
+import pages.prompts.library_vm as vm
+
+stp.add_page_title()
 
 # Initialization
 
 page_config.initialize_page(
-    icon="📚",
-    title="Prompt Library",
     desc="""
     Explore and modify your prompt collection.
     """)
-
-def save_prompt(prompt: PredefinedPrompt):        
-    st.toast(f"[NOT REALLY] Saved {prompt.title} to the database.", icon="✅")    
-
-prompts = prompt_fetcher.get_predefined_prompts()     
+  
 
 # UI
 col1, col2 = st.columns([4, 1])
@@ -25,7 +19,7 @@ col1, col2 = st.columns([4, 1])
 with col1:
     st.selectbox(label='Select Prompt', 
                  label_visibility="collapsed",
-                 options=prompts, 
+                 options=vm.prompts, 
                  key='prompt',                  
                  format_func=lambda x: f"{x.icon} {x.title}")
         
@@ -33,7 +27,7 @@ prompt = st.session_state['prompt']
 
 with col2:
     if st.button("💾Save"):
-        save_prompt(prompt)
+        vm.save_prompt(prompt)
     
 do_expand = True
 

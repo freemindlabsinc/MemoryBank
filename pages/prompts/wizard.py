@@ -3,12 +3,13 @@ import src.utils.prompt_fetcher as prompt_fetcher
 import src.utils.llm as llm
 import src.utils.transcript_fetcher as transcript_fetcher 
 import src.utils.webpage_fetcher as webpage_fetcher
-import src.components.page_configurator as page_config
+import src.components.page_header as page_config
 import src.components.formatting_utils as formatting_utils
+from st_pages import add_page_title
+
+add_page_title()
 
 page_config.initialize_page(
-     "🪄", 
-     "Prompt Wizard", 
      """This module lets you prompts from your library against your data.     
 You can either :green[type some text], :orange[download transcripts from YouTube videos] or :blue[scrape web pages], and then 
 use them to generate completions using one or more prompts.""")
