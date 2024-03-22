@@ -1,6 +1,5 @@
 import streamlit as st
 import src.components.page_configurator as page_config
-from msal_streamlit_authentication import msal_authentication
 
 page_config.initialize_page(
     icon="💠",
@@ -9,35 +8,15 @@ page_config.initialize_page(
     This is the home page of the application.
     """,
     menu_items={
+        # TODO: point it to our WebSite
         'Get Help': 'https://www.extremelycoolapp.com/help',
+        # TODO: point it to our Discord
         'Report a bug': "https://www.extremelycoolapp.com/bug",
+        # TODO: point it to our About page on the main website 
         'About': "# This is a header. This is an *extremely* cool app!"
     }
 )
 
-login_token = msal_authentication(
-    auth={
-        "clientId": "a8d63b95-8318-43e9-b908-fb99672794a0",
-        "authority": "https://login.microsoftonline.com/f804952a-b15a-462f-bab4-bf6397ecc672",
-        "redirectUri": "/",
-        "postLogoutRedirectUri": "/"
-    }, # Corresponds to the 'auth' configuration for an MSAL Instance
-    cache={
-        "cacheLocation": "sessionStorage",
-        "storeAuthStateInCookie": False
-    }, # Corresponds to the 'cache' configuration for an MSAL Instance
-    login_request={
-        "scopes": ["a8d63b95-8318-43e9-b908-fb99672794a0/.default"]
-    }, # Optional
-    logout_request={}, # Optional
-    login_button_text="Login", # Optional, defaults to "Login"
-    logout_button_text="Logout", # Optional, defaults to "Logout"
-    class_name="css_button_class_selector", # Optional, defaults to None. Corresponds to HTML class.
-    html_id="html_id_for_button", # Optional, defaults to None. Corresponds to HTML id.
-    key=1 # Optional if only a single instance is needed
-)
-
-st.write(login_token)
 st.write("Welcome to A.I. Of You! ")
 st.write("""
 This is the home page of the application. At some point it will show useful information about the app
