@@ -8,8 +8,11 @@ page_config.initialize_page(
     This is the home page of the application.
     """,
     menu_items={
+        # TODO: point it to our WebSite
         'Get Help': 'https://www.extremelycoolapp.com/help',
+        # TODO: point it to our Discord
         'Report a bug': "https://www.extremelycoolapp.com/bug",
+        # TODO: point it to our About page on the main website 
         'About': "# This is a header. This is an *extremely* cool app!"
     }
 )
