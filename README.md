@@ -17,6 +17,6 @@ pip install torchaudio
 pip install streamlit==1.32.1
 pip install openai
 pip install youtube-transcript-api
-pip install bs4
-pip install yaml
-pip install streamlit_authenticator
+pip install st-pages
+pip install streamlit_authentication
+pip install streamlit-chat
