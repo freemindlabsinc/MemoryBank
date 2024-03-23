@@ -22,7 +22,7 @@ page_config.initialize_page(
 show_pages(
     [
         #Section("Home", "🏚️"),
-        Page("home.py", "Home", "🏚️"),
+        Page("app.py", "Home", "🏚️"),
         Page("pages/chat/chat.py", "Chat", "💬"),
         
         #Section("Prompts", "📜"), # This is a section title, not a page

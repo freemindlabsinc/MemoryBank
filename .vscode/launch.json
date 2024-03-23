@@ -9,7 +9,7 @@
             "type": "debugpy",
             "request": "launch",
             "module": "streamlit",
-            "args": ["run","./Home.py"],
+            "args": ["run","./app.py"],
             "jinja": true,
             "justMyCode": false
         }        
