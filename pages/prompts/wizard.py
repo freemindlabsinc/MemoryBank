@@ -159,8 +159,9 @@ if process:
                with tab:
                     st.subheader(prompt.title)
                          
-                    # FIXME open api key hack
-                    key = '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'    
+                    import os
+                    key = os.getenv("OPENAI_API_KEY")
+
                     tab_txt = ""
                                    
                     stream = llm.get_completion_stream(
