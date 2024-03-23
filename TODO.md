@@ -1,6 +1,6 @@
 NOW:
 
-- [ ] Finish integration with st_pages
+- [X] Finish integration with st_pages
 
     - [lackary/st_pages](https://github.com/blackary/st_pages)
 
@@ -8,7 +8,7 @@ NOW:
     - Without this we cannot do multi-user.
     - https://github.com/mkhorasani/Streamlit-Authenticator
 
-- [ ] Integrate https://github.com/blackary/st_pages
+- [X] Integrate https://github.com/blackary/st_pages
     - This will allow us to manage multiple pages better and faster updates.
     - It has a really cool option to create menus from config files!
     - https://github.com/blackary/st_pages?tab=readme-ov-file#method-two-declare-pages-inside-of-a-config-file
@@ -34,10 +34,15 @@ NOW:
         - YouTube
         - Google Drive
         - File Uploads (local data)
+            - Specifically audio files we record
 
-- [ ] Complete the prompt editor
+- [ ] Dictate module
 
-- [ ] Complete the prompt wizard
+- [ ] Settings page
+
+- [X] Add chat screen
+    - [ ] Display files to 'converse with'
+    - Other improvements
 
     
 

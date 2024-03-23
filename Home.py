@@ -43,8 +43,9 @@ This is the home page of the application. At some point it will show useful info
 and some diagrams or charts.
 
 You can navigate to different modules using the sidebar on the left.
-Only the following modules are functional right now:
+Only the following modules are (kinda) functional right now:
 """)
 
-# st.page_link("pages/2_📚_Prompt_Library.py", label=":blue[Prompt Library]", icon="📚")
-# st.page_link("pages/3_🪄_Prompt_Wizard.py", label=":green[Prompt Wizard]", icon="🪄")
+st.page_link("pages/chat/chat.py", label=":blue[Chat]", icon="📚")
+st.page_link("pages/prompts/wizard.py", label=":orange[Prompt Wizard]", icon="🪄")
+st.page_link("pages/prompts/library.py", label=":green[Prompt Library]", icon="💬")
