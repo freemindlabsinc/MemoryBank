@@ -1,0 +1,19 @@
+cookie:
+  expiry_days: 30
+  key: aldjdawkjd12314235
+  name: FMLcookie_alwqrouwetwe91723124351
+credentials:
+  usernames:
+    jsmith:
+      email: afederici75@gmail.com
+      logged_in: false
+      name: alex federici3
+      password: 'abc'
+    rbriggs:
+      email: rbriggs@gmail.com
+      logged_in: false
+      name: Rebecca Briggs
+      password: 'abc'
+preauthorized:
+  emails:
+  - melsby@gmail.com

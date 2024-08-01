@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "API",
+            "name": "AIOU",
             "type": "debugpy",
             "request": "launch",
-            "module": "uvicorn",
-            "args": ["main:app", "--reload", "--port", "7000"],
+            "module": "streamlit",
+            "args": ["run","./app.py"],
             "jinja": true,
             "justMyCode": false
-          }
+        }        
     ]
 }
